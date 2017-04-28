@@ -4,7 +4,7 @@
     "description": "Lokalna bibljoteka za rad sa WS.",
     "autoload": {
         "psr-4": {
-            "Wsa\\Ww\\": "src/Wsa"
+            "Wsa\\Ws\\": "src/Wsa"
         }
     },
     "autoload-dev": {
