@@ -1,0 +1,40 @@
+{
+    "name": "wsa/ws",
+    "type": "lib",
+    "description": "Lokalna bibljoteka za rad sa WS.",
+    "autoload": {
+        "psr-4": {
+            "Wsa\\Ww\\": "src/Wsa"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Ws\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Vedran Vukoje",
+            "email": "vedran.vukoje.11@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.0",
+        "ocramius/proxy-manager": "^1.0",
+        "symfony/options-resolver": "^3.2",
+        "container-interop/container-interop": "^1.1.0",
+        "zendframework/zend-stdlib": "^3.1",
+        "ocramius/generated-hydrator": "^2.0",
+        "zendframework/zend-xmlrpc": "^2.6",
+        "zendframework/zend-json": "^3.0",
+        "zendframework/zend-soap": "^2.6"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~5.7"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.0-dev"
+        }
+    }
+}
