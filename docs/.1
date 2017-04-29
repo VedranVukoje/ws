@@ -18,3 +18,26 @@ sebastian/global-state suggests installing ext-uopz (*)
 phpunit/php-code-coverage suggests installing ext-xdebug (^2.5.1)
 phpunit/phpunit suggests installing phpunit/php-invoker (~1.1)
 phpunit/phpunit suggests installing ext-xdebug (*)
+
+
+<VirtualHost ws.tests:80>
+    DocumentRoot "/home/vedran/Projects/wsa/ws/tests/Server"
+    ServerName ws.tests
+
+    ErrorLog "/home/vedran/Projects/wsa/ws/error_log"
+
+    LogFormat "%h %l %u %t \"%r\" %>s %b" common
+    CustomLog /home/vedran/Projects/wsa/ws/access_log common
+
+    # Other directives here
+        <Location /ws-server-status>
+                SetHandler server-status
+                Order Deny,Allow
+                Allow from 127.0.0.1
+        </Location>
+        <Directory "/home/vedran/Projects/wsa/ws/tests/Server" >
+                #Options Indexes FollowSymLinks
+                AllowOverride All
+                Require all granted
+        </Directory>
+</VirtualHost>
