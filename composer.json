@@ -9,7 +9,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\Ws\\": "tests/"
+            "Tests\\Ws\\": "tests/Wsa"
         }
     },
     "authors": [
