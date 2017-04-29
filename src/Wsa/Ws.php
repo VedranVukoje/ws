@@ -38,11 +38,11 @@ final class Ws
             $ws = $this->manager->get($name);
             return $ws();
         } catch (WsaWsException $ex) {
-            dump($ex);
+            return $ex;
         } catch (SoapFault $ex) {
-            dump($ex);
+            return $ex;
         } catch (Exception $ex) {
-            dump($ex);
+            return $ex;
         }
     }
 
