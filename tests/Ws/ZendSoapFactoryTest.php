@@ -6,6 +6,8 @@
  * and open the template in the editor.
  */
 namespace Tests\Ws;
+
+use Wsa\Ws\ZendSoapFactory;
 /**
  * Description of ZendSoapFactoryTest
  *
@@ -14,5 +16,28 @@ namespace Tests\Ws;
 class ZendSoapFactoryTest extends \PHPUnit_Framework_TestCase
 {
     
+    private $wsdl;
     
+    private $options;
+    
+    public function setUp()
+    {
+        
+    }
+
+
+    /**
+     * 
+     * @test
+     * @expectedException \Wsa\Ws\Exceptions\SoapWsdlCanNotBeEmpty
+     */
+    public function shouldThrowException()
+    {
+        (new ZendSoapFactory)->client();
+    }
+    
+    public function shouldBeInstanceOfWsClient()
+    {
+        //$this->getMockFromWsdl($wsdlFile)
+    }
 }
