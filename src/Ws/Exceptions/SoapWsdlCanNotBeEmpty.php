@@ -5,14 +5,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-namespace Tests\Ws;
+
+namespace Wsa\Ws\Exceptions;
+
 /**
- * Description of ZendSoapFactoryTest
+ * Description of SoapWsdlCanNotBeEmpty
  *
  * @author vedran
  */
-class ZendSoapFactoryTest extends \PHPUnit_Framework_TestCase
+class SoapWsdlCanNotBeEmpty extends WsaWsException
 {
-    
-    
+    //put your code here
 }

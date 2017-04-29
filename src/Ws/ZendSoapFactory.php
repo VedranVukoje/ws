@@ -7,6 +7,7 @@
 
 namespace Wsa\Ws;
 
+use Wsa\Ws\Exceptions\SoapWsdlCanNotBeEmpty;
 use Zend\Soap\Client;
 
 /**
@@ -16,8 +17,13 @@ use Zend\Soap\Client;
  */
 class ZendSoapFactory
 {
-    public function client($wsdl, array $options = []): Client
+
+    public function client(string $wsdl = null, array $options = []): Client
     {
+        if (empty($wsdl)) {
+            throw new SoapWsdlCanNotBeEmpty("Nema vrednosti za 'wsdl' kljuc u wsaws.php");
+        }
+
         return new Client($wsdl, $options);
     }
 }
