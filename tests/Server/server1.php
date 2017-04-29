@@ -6,7 +6,7 @@
 
 namespace {
 //    error_reporting(error_reporting() & ~E_USER_DEPRECATED);
-    $loader = require __DIR__ . '/vendor/autoload.php';
+    $loader = require __DIR__ . '/../../vendor/autoload.php';
 }
 
 namespace Wsa\Ws {
@@ -19,9 +19,25 @@ namespace Wsa\Ws {
 
     class Server1
     {
-        public function remoteTest()
+        
+        /**
+         * 
+         * @return string
+         */
+        public function remoteTest1()
         {
             return 'remoteTest';
+        }
+        
+        /**
+         * 
+         * @param int $a
+         * @param int $b
+         * @return int
+         */
+        public function remoteTest2($a, $b)
+        {
+            return $a+$b;
         }
     }
 
@@ -29,8 +45,8 @@ namespace Wsa\Ws {
     if ('GET' == $request->getMethod()) {
 
         $autoDiscover = new AutoDiscover();
-        $autoDiscover->setUri('http://learn.symfony/wsaws.php');
-        $autoDiscover->setServiceName('WsaWs');
+        $autoDiscover->setUri('http://ws.tests/server1.php');
+        $autoDiscover->setServiceName('Server1');
         $autoDiscover->setClass(Server1::class);
         $wsdl = $autoDiscover->generate();
 
@@ -42,8 +58,8 @@ namespace Wsa\Ws {
     }
 
     if ('POST' == $request->getMethod()) {
-        $server = new \Zend\Soap\Server("http://learn.symfony/wsaws.php", [
-            'actor' => "http://learn.symfony/wsaws.php"
+        $server = new \Zend\Soap\Server("http://ws.tests/server1.php", [
+            'actor' => "http://ws.tests/server1.php"
         ]);
         $server->setClass(Server1::class);
         $server->handle();

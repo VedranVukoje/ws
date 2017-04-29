@@ -8,6 +8,7 @@
 namespace Tests\Ws;
 
 use Wsa\Ws\ZendSoapFactory;
+use Zend\Soap\Client;
 /**
  * Description of ZendSoapFactoryTest
  *
@@ -16,16 +17,6 @@ use Wsa\Ws\ZendSoapFactory;
 class ZendSoapFactoryTest extends \PHPUnit_Framework_TestCase
 {
     
-    private $wsdl;
-    
-    private $options;
-    
-    public function setUp()
-    {
-        
-    }
-
-
     /**
      * 
      * @test
@@ -36,8 +27,19 @@ class ZendSoapFactoryTest extends \PHPUnit_Framework_TestCase
         (new ZendSoapFactory)->client();
     }
     
+    /**
+     * 
+     * @test
+     */
     public function shouldBeInstanceOfWsClient()
     {
-        //$this->getMockFromWsdl($wsdlFile)
+        
+//        $this->createMock(Client::class);
+        
+        $mock = $this->getMockBuilder(Client::class,[])->getMock();
+        
+        $clent = (new ZendSoapFactory)->client('http://ws.tests/server1.php');
+        
+        $this->assertEquals($clent, $mock);
     }
 }
