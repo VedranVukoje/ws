@@ -8,6 +8,7 @@
 
 namespace Wsa\Ws;
 
+use Zend\Soap\Client as ZendSoapClient;
 /**
  * WS Client . 
  *
@@ -39,7 +40,7 @@ class Client
     public function __call($name, $arguments)
     {
         if(null === $this->client){
-            $this->client();
+            $this->setClient();
         }
         
 //        dump($arguments);
@@ -49,12 +50,18 @@ class Client
                 [$this->client, 'call'], 
                 [$name, $arguments]);
     }
+    
+    public function clinet(): ZendSoapClient
+    {
+        return $this->client;
+    }
 
-
-    private function client()
+    private function setClient()
     {
         $this->client = $this->soap->client($this->wsdl, $this->options);
     }
+    
+    
     
     
     /**
