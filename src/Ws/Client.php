@@ -18,9 +18,7 @@ class Client
 {
     private $client;
     private $soap;
-    private $wsdl;
     private $name;
-    private $options;
     
     
     
@@ -28,8 +26,7 @@ class Client
     {
         $this->soap = $soap;
         $this->name = $config->client();
-        $this->wsdl = $config->wsdl();
-        $this->options = $config->options();
+        $this->setClient($config->wsdl(), $config->options());
     }
     
     public function name()
@@ -39,11 +36,11 @@ class Client
     
     public function __call($name, $arguments)
     {
-        if(null === $this->client){
-            $this->setClient();
-        }
-        
-//        dump($arguments);
+
+        /**
+         * @todo nesto mi nestima ovo !?!?
+         * istrazi.
+         */
         $arguments = is_array($arguments[0])? $arguments[0] : $arguments;
         
         return call_user_func_array(
@@ -51,14 +48,14 @@ class Client
                 [$name, $arguments]);
     }
     
-    public function clinet(): ZendSoapClient
+    public function client(): ZendSoapClient
     {
         return $this->client;
     }
 
-    private function setClient()
+    private function setClient($wsdl, $options)
     {
-        $this->client = $this->soap->client($this->wsdl, $this->options);
+        $this->client = $this->soap->client($wsdl, $options);
     }
     
     

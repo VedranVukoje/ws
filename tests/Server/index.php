@@ -35,7 +35,7 @@ try{
     
     dump($server1->remoteTest2(['a' => 1, 'b' => 3]));
     
-//    $ws->getLastResponse();
+    dump($server1->client()->getLastResponse());
     
 
     
