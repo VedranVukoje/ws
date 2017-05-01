@@ -17,10 +17,8 @@ namespace Wsa\Ws {
 
     $request = Request::createFromGlobals();
 
-    class Server1
+    class Server2
     {
-        
-        
         
         /**
          * 
@@ -41,46 +39,14 @@ namespace Wsa\Ws {
         {
             return $a+$b;
         }
-        
-        /**
-         * 
-         * @param array $array
-         * @return string
-         */
-        public function rmoeteTest3(array $array = ['key' => 1, 'value' => 'one'])
-        {
-            return $array['key'].' => '.$array['one'];
-        }
-        
-        /**
-         * 
-         * @return array
-         */
-        public function remoteTest4()
-        {
-            return ['key' => 1, 'value' => 'one'];
-        }
-        
-        /**
-         * 
-         * @return \stdClass
-         */
-        public function remoteTest5()
-        {
-            $object = new \stdClass;
-            
-            $object->one = 1;
-            
-            return $object;
-        }
     }
 
 //    echo $request->getMethod();
     if ('GET' == $request->getMethod()) {
 
         $autoDiscover = new AutoDiscover();
-        $autoDiscover->setUri('http://ws.tests/server1.php');
-        $autoDiscover->setServiceName('Server1');
+        $autoDiscover->setUri('http://ws.tests/server2.php');
+        $autoDiscover->setServiceName('Server2');
         $autoDiscover->setClass(Server1::class);
         $wsdl = $autoDiscover->generate();
 
@@ -92,10 +58,10 @@ namespace Wsa\Ws {
     }
 
     if ('POST' == $request->getMethod()) {
-        $server = new \Zend\Soap\Server("http://ws.tests/server1.php", [
+        $server = new \Zend\Soap\Server("http://ws.tests/server2.php", [
             'actor' => "http://ws.tests/server1.php"
         ]);
-        $server->setClass(Server1::class);
+        $server->setClass(Server2::class);
         $server->handle();
     }
 }

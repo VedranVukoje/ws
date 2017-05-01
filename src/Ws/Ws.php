@@ -8,11 +8,14 @@
 
 namespace Wsa\Ws;
 
+use Wsa\Ws\Exceptions\WsException;
 use Wsa\Ws\Exceptions\WsaWsException; 
 use SoapFault;
 use Exception;
+
+use Tests\Ws\ClassMap\Server1RemoteTest1ClassMap;
 /**
- * WsBuilder
+ * WS Clint manager .
  *
  * @author vedran
  */
@@ -23,6 +26,11 @@ final class Ws
 
     public static function build($configPath)
     {
+        $config = $configPath . '/wsaws.php';
+        if(!file_exists($config)){
+            throw new WsException(sprintf('Konfiguracioni fajl "%s" ne postoji.', $config));
+        }
+        
         /**
          * @todo 
          * Ovo tek kasnije include 'config_za_wsawsclint.php'

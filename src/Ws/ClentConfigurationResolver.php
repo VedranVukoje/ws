@@ -8,14 +8,15 @@
 
 namespace Wsa\Ws;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Wsa\Ws\Adapter\WsArrayCollection;
+use Wsa\Ws\Exceptions\ClentConfigurationResolverException;
 
 /**
  * Iz array mapiramo u ClientConfiguration
  *
  * @author vedran
  */
-class ClentConfigurationResolver implements \IteratorAggregate
+class ClentConfigurationResolver implements \IteratorAggregate, \ArrayAccess
 {
 
     /**
@@ -23,24 +24,23 @@ class ClentConfigurationResolver implements \IteratorAggregate
      * @var ClientConfiguration [] kao Closure []
      */
     private $clientConfigurations;
-    
+
     public function __construct(array $options = [])
     {
-        $this->clientConfigurations = new ArrayCollection();
+        $this->clientConfigurations = new WsArrayCollection();
         $this->setClientConfigurations($options);
     }
-    
-    public function clientConfigurations()
+
+    public function clientConfigurations(): WsArrayCollection
     {
         return $this->clientConfigurations;
     }
 
-
-    public function clientConfiguration($key)
+    public function clientConfiguration($key): ClientConfiguration
     {
         return $this->clientConfigurations[$key];
     }
-    
+
     public function getIterator()
     {
         return $this->clientConfigurations;
@@ -59,9 +59,29 @@ class ClentConfigurationResolver implements \IteratorAggregate
     {
         $this->setClientConfigurations($options);
     }
-    
+
+    public function offsetSet($offset, $value)
+    {
+        throw new ClentConfigurationResolverException('ClentConfigurationResolver je read-only.');
+    }
+
+    public function offsetGet($offset)
+    {
+        return $this->clientConfigurations[$offset];
+    }
+
+    public function offsetExists($offset)
+    {
+        throw new ClentConfigurationResolverException('ClentConfigurationResolver je read-only.');
+    }
+
+    public function offsetUnset($offset)
+    {
+        throw new ClentConfigurationResolverException('ClentConfigurationResolver je read-only.');
+    }
+
     /**
-     * ClientConfiguration agregiramo u ArrayCollection
+     * ClientConfiguration agregiramo u WsArrayCollection
      * @todo Naci mozda neko prikladnije ime
      * @param array $options
      */
@@ -69,14 +89,17 @@ class ClentConfigurationResolver implements \IteratorAggregate
     {
         foreach ($options as $clientName => $clientSettings) {
             /**
-             * @todo validacija ovde ???? za wsdl i options...
+             * Da li validirati i ovede?
+             * $wsld se vec validira ClientConfiguration s $clientOptions 
+             * isto u ClientConfiguration::setOptions ima defaultna podesavanja 
              */
-            $wsld = $clientSettings['wsdl'];
-            $clientOptions = $clientSettings['options'];
-            
-            $this->clientConfigurations->set($clientName, function() use ($clientName, $wsld, $clientOptions){
-                return new ClientConfiguration($clientName, $wsld, $clientOptions);
+            $wsld = $clientSettings['wsdl'] ?? '';
+            $clientOptions = $clientSettings['options'] ?? [];
+
+            $this->clientConfigurations->set($clientName, function() use ($clientName, $wsld, $clientOptions) {
+                return new ClientConfiguration(new ClientName($clientName), new Wsdl($wsld), $clientOptions);
             });
         }
     }
+
 }

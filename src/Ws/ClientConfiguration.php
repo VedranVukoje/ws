@@ -8,62 +8,69 @@
 
 namespace Wsa\Ws;
 
-use Wsa\Ws\Exceptions\ClientConfigurationException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * ClientConfiguration
  * 
- * Konfiguracija za \Zend\Soap\Client klijent. Konfiguracija je namapirana iz
- * config.php fajla u ClentConfigurationResolver::resolve
+ * Konfiguracija za klijent (\Wsa\Ws\Client) . 
+ * Objekat se instancira u ClentConfigurationResolver::setClientConfigurations
+ * 
  *
  * @author vedran
  */
 class ClientConfiguration
 {
-    
+
     /**
      * Ime Klijenta
      * @var string
      */
     private $clientName;
+
     /**
      * Wsdl za \Zend\Soap\Client
      * @var string 
      */
     private $wsdl;
+
     /**
      * Options za \Zend\Soap\Client
      * @var type array
      */
     private $options;
-
-
-    public function __construct($clientName, $wsdl ,array $options = [])
-    {
-        $this->setClientName($clientName);
-        $this->setWsdl($wsdl);
-        $this->setOptions($options);
-    }
     
     /**
      * 
-     * @return string
+     * @param \Wsa\Ws\ClientName $clientName
+     * @param \Wsa\Ws\Wsdl $wsdl
+     * @param array $options
+     */
+    public function __construct(ClientName $clientName, Wsdl $wsdl, array $options = [])
+    {
+        $this->clientName = $clientName;
+        $this->wsdl = $wsdl;
+        $this->setOptions($options);
+    }
+
+    /**
+     * 
+     * @return \Wsa\Ws\Wsdl
      */
     public function wsdl()
     {
         return $this->wsdl;
     }
-    
+
     /**
      * 
-     * @return string
+     * @return \Wsa\Ws\ClientName
      */
     public function client()
     {
         return $this->clientName;
     }
-    
+
     /**
      * 
      * @return []
@@ -72,31 +79,7 @@ class ClientConfiguration
     {
         return $this->options;
     }
-    
-    /**
-     * @todo prebaciti u VO ClientName
-     * @param string $clientName
-     * @throws ClientConfigurationException
-     */
-    private function setClientName($clientName)
-    {
-        
-        if(empty($clientName)){
-            throw new ClientConfigurationException("Ime servisa nije definisano.");
-        }
-        
-        $this->clientName = $clientName;
-    }
-    
-    /**
-     * @todo prebaciti u VO Wsdl !
-     * @param string $wsdl
-     */
-    private function setWsdl($wsdl)
-    {
-        $this->wsdl = $wsdl;
-    }
-    
+
     /**
      * Default podesavanja za Zend\Soap\Client
      * @param array $options
@@ -104,7 +87,7 @@ class ClientConfiguration
     private function setOptions(array $options = [])
     {
         $resolver = new OptionsResolver();
-        
+
         $resolver->setDefaults([
             'classmap' => null,
             'encoding' => 'UTF-8',
@@ -131,16 +114,17 @@ class ClientConfiguration
             'keepalive' => null,
             'sslmethod' => null
         ]);
-        
-        
-        
+
+
+
         /**
          * @todo
          * Mozda procackati bolje resenje ?
          * ocije koje imaju vrednost null ne koristimo
          */
-        $this->options = array_filter($resolver->resolve($options), function($option){
+        $this->options = array_filter($resolver->resolve($options), function($option) {
             return null !== $option;
         });
     }
+
 }

@@ -42,9 +42,11 @@ class Client
             $this->client();
         }
         
+        $arguments = is_array($arguments[0])? $arguments[0] : $arguments;
+        
         return call_user_func_array(
                 [$this->client, 'call'], 
-                [$name, $this->arguments($arguments[0])]);
+                [$name, $arguments]);
     }
 
 

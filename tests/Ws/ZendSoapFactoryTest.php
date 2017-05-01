@@ -31,15 +31,10 @@ class ZendSoapFactoryTest extends \PHPUnit_Framework_TestCase
      * 
      * @test
      */
-    public function shouldBeInstanceOfWsClient()
+    public function shouldBeInstanceOfZendSoapClient()
     {
-        
-//        $this->createMock(Client::class);
-        
-        $mock = $this->getMockBuilder(Client::class,[])->getMock();
-        
         $clent = (new ZendSoapFactory)->client('http://ws.tests/server1.php');
         
-        $this->assertEquals($clent, $mock);
+        $this->assertInstanceOf(Client::class, $clent);
     }
 }

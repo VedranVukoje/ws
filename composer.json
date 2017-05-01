@@ -9,7 +9,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\Ws\\": "tests/Ws"
+            "Tests\\Ws\\": "tests/Ws",
+            "Tests\\Ws\\ClassMap\\": "tests/ClassMap"
         }
     },
     "authors": [
@@ -29,7 +30,8 @@
         "zendframework/zend-json": "^3.0",
         "zendframework/zend-soap": "^2.6",
         "symfony/var-dumper": "^3.2",
-        "symfony/http-foundation": "^3.2"
+        "symfony/http-foundation": "^3.2",
+        "doctrine/collections": "^1.4"
     },
     "require-dev": {
         "phpunit/phpunit": "~5.7"
