@@ -42,6 +42,7 @@ class Client
             $this->client();
         }
         
+//        dump($arguments);
         $arguments = is_array($arguments[0])? $arguments[0] : $arguments;
         
         return call_user_func_array(
@@ -55,6 +56,13 @@ class Client
         $this->client = $this->soap->client($this->wsdl, $this->options);
     }
     
+    
+    /**
+     * @todo ovo ubaci u __call call_user_func_array kao $this->arguments($arguments)
+     * http://stackoverflow.com/questions/12728358/how-do-i-create-a-php-soapparam-of-soapparams
+     * @param array $arguments
+     * @return \SoapParam
+     */
     private function arguments($arguments)
     {
         return new \SoapParam($arguments, $this->name);

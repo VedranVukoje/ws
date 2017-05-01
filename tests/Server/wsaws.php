@@ -9,9 +9,8 @@ return [
             'classmap' => [
                 'remoteTest1' => 'Tests\Ws\ClassMap\Server1RemoteTest1ClassMap',
                 'remoteTest2' => 'Tests\Ws\ClassMap\Server1RemoteTest2ClassMap',
-                'remoteTest5' => \Tests\Ws\ClassMap\Server1RemoteTest5ClassMap::class
+                'remoteTest5Out' => 'Tests\Ws\ClassMap\Server1RemoteTest5ClassMap'
             ]
-            
         ]
     ],
     'server2' => [

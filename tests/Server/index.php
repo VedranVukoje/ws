@@ -32,11 +32,13 @@ try{
     $ws = Ws::build(__DIR__);
     
     dump($ws->get('server1')->remoteTest2(['a' => 1, 'b' => 3]));
+    $ws->get('server1')->getLastResponse();
     dump($ws->get('server1')->remoteTest2(1,3));
     
     dump($ws->get('server1')->remoteTest4());
     dump($ws->get('server1')->remoteTest5());
     
+//    dump($object->one);
     
 //    ;
     

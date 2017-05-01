@@ -15,13 +15,16 @@ namespace Wsa\Ws {
     use Symfony\Component\HttpFoundation\Request;
     use Zend\Soap\AutoDiscover;
 
-    $request = Request::createFromGlobals();
+$request = Request::createFromGlobals();
 
     class Server1
     {
-        
-        
-        
+
+        public function __construct()
+        {
+            $this->vedaran = 'vukoje';
+        }
+
         /**
          * 
          * @return string
@@ -30,7 +33,7 @@ namespace Wsa\Ws {
         {
             return 'remoteTest';
         }
-        
+
         /**
          * 
          * @param int $a
@@ -39,9 +42,9 @@ namespace Wsa\Ws {
          */
         public function remoteTest2($a, $b)
         {
-            return $a+$b;
+            return $a + $b;
         }
-        
+
         /**
          * 
          * @param array $array
@@ -49,9 +52,9 @@ namespace Wsa\Ws {
          */
         public function rmoeteTest3(array $array = ['key' => 1, 'value' => 'one'])
         {
-            return $array['key'].' => '.$array['one'];
+            return $array['key'] . ' => ' . $array['one'];
         }
-        
+
         /**
          * 
          * @return array
@@ -60,19 +63,21 @@ namespace Wsa\Ws {
         {
             return ['key' => 1, 'value' => 'one'];
         }
-        
+
         /**
          * 
          * @return \stdClass
          */
         public function remoteTest5()
         {
-            $object = new \stdClass;
-            
+            $object = new \stdClass();
+
             $object->one = 1;
-            
+            $object->two = ['nesto...'];
+
             return $object;
         }
+
     }
 
 //    echo $request->getMethod();
@@ -82,6 +87,9 @@ namespace Wsa\Ws {
         $autoDiscover->setUri('http://ws.tests/server1.php');
         $autoDiscover->setServiceName('Server1');
         $autoDiscover->setClass(Server1::class);
+//        $autoDiscover->setOperationBodyStyle(array('use' => 'literal', 'namespace' => 'http://ws.tests/server1.php'));
+//        $autoDiscover->setBindingStyle(['style' => 'document','transport' => 'http://schemas.xmlsoap.org/soap/http']);
+
         $wsdl = $autoDiscover->generate();
 
         $response = (new Response())->setContent($wsdl->toXML());
