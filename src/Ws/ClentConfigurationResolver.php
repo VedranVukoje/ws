@@ -72,7 +72,7 @@ class ClentConfigurationResolver implements \IteratorAggregate, \ArrayAccess
 
     public function offsetExists($offset)
     {
-        throw new ClentConfigurationResolverException('ClentConfigurationResolver je read-only.');
+        return isset($this->clientConfigurations[$offset]);
     }
 
     public function offsetUnset($offset)
