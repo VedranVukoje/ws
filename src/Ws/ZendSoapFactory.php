@@ -15,15 +15,11 @@ use Zend\Soap\Client;
  *
  * @author Vedran Vukoje <vedran.vukoje at telenor.rs>
  */
-class ZendSoapFactory
+class ZendSoapFactory implements SoapClientFactoryInterface
 {
 
-    public function client(string $wsdl = null, array $options = []): Client
+    public function client(string $wsdl = null, array $options = [])
     {
-        if (empty($wsdl)) {
-            throw new SoapWsdlCanNotBeEmpty("Nema vrednosti za 'wsdl' kljuc u wsaws.php");
-        }
-
         return new Client($wsdl, $options);
     }
 }

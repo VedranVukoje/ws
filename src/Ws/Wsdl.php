@@ -8,6 +8,7 @@
 
 namespace Wsa\Ws;
 
+use Wsa\Ws\Exceptions\WsdlException;
 /**
  * Description of Wsdl
  *
@@ -25,6 +26,12 @@ class Wsdl
 
     private function setValue(string $value)
     {
+        
+        if (empty($value)) {
+            $msg = 'Klijent nema uri "wsdl" u konfiguracionom fajul wsaws.php';
+            throw new WsdlException($msg);
+        }
+        
         $this->value = $value;
     }
 

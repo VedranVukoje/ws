@@ -37,7 +37,7 @@ final class Ws
          * u zavisnosti od alata ( framework ... ) lokacija za konfig...
          */
         $configuration = new ClentConfigurationResolver(include $configPath . '/wsaws.php');
-        return new static(new ClientManager($configuration, new ZendSoapFactory()));
+        return new static(new ClientManager($configuration));
     }
 
     public function get($name)
@@ -52,6 +52,11 @@ final class Ws
         } catch (Exception $ex) {
             return $ex;
         }
+    }
+    
+    public function exists($name): bool
+    {
+        return $this->manager->exists($name);
     }
 
     private function dump($dump)

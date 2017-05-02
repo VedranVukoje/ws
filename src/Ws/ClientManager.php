@@ -7,7 +7,6 @@
 
 namespace Wsa\Ws;
 
-use Wsa\Ws\Adapter\WsArrayCollection;
 use Wsa\Ws\Exceptions\ClientNotFoundException;
 
 /**
@@ -17,44 +16,43 @@ use Wsa\Ws\Exceptions\ClientNotFoundException;
  */
 class ClientManager
 {
+
     private $clientConfigurations;
-    private $ws;
-    private $sopa;
-    
     private static $clients = [];
 
-    public function __construct(
-            ClentConfigurationResolver $clientConfigurations,
-            ZendSoapFactory $soap)
+    public function __construct(ClentConfigurationResolver $clientConfigurations)
     {
-        $this->ws = new WsArrayCollection();
         $this->clientConfigurations = $clientConfigurations;
-        $this->sopa = $soap;
     }
-    
+
     /**
      * 
      * @param string $name
      * @return Closure Client
      * @throws ClientNotFoundException
      */
-    public function get($name): \Closure
+    public function get(string $name): \Closure
     {
-        
-        if(isset(self::$clients[$name])){
+
+        if (isset(self::$clients[$name])) {
             return self::$clients[$name];
         }
-        
-        if($conf = $this->clientConfigurations[$name]){
-            $soap = $this->sopa;
-            self::$clients[$name] = function() use ($soap,$conf){
-                return new Client($soap,$conf());
+
+        if ($conf = $this->clientConfigurations[$name]) {
+
+            self::$clients[$name] = function() use ($conf) {
+                return new Client(new ZendSoapFactory, $conf());
             };
-            
+
             return self::$clients[$name];
         }
-        
-        throw new ClientNotFoundException(sprintf("Klijent '%s' nije pronadjen.", $name));
+
+        throw new ClientNotFoundException(sprintf("Soap klijent '%s' nije pronadjen.", $name));
+    }
+
+    public function exists(string $name): bool
+    {
+        return isset(self::$clients[$name]);
     }
 
 }

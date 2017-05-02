@@ -8,7 +8,6 @@
 
 namespace Wsa\Ws;
 
-use Zend\Soap\Client as ZendSoapClient;
 /**
  * WS Client . 
  *
@@ -22,7 +21,12 @@ class Client
     
     
     
-    public function __construct(ZendSoapFactory $soap, ClientConfiguration $config)
+    /**
+     * 
+     * @param \Wsa\Ws\SoapClientFactoryInterface $soap
+     * @param \Wsa\Ws\ClientConfiguration $config
+     */
+    public function __construct(SoapClientFactoryInterface $soap, ClientConfiguration $config)
     {
         $this->soap = $soap;
         $this->name = $config->client();
@@ -40,6 +44,15 @@ class Client
         /**
          * @todo nesto mi nestima ovo !?!?
          * istrazi.
+         * $client->nekaMetoda();
+         * PHP Notice:  Undefined offset: 0 in /home/vedran/Projects/wsa/ws/src/Ws/Client.php
+         * kako pozvati __call na metodu koja nema argumente?
+         * @todo da ne petljas sa ovom proverom.
+         * 
+         * $a = 1;
+         * $b = 1;
+         * $client->nekaMetoda($a, $b); // [0 => 1, 1 => 1]
+         * $client->nekaMetoda([ 'a' => $a, 'b' => $b ]); [ 0 => ["a" => 1, "b" => 1]]
          */
         $arguments = is_array($arguments[0])? $arguments[0] : $arguments;
         
@@ -48,7 +61,7 @@ class Client
                 [$name, $arguments]);
     }
     
-    public function client(): ZendSoapClient
+    public function client()
     {
         return $this->client;
     }
@@ -57,9 +70,6 @@ class Client
     {
         $this->client = $this->soap->client($wsdl, $options);
     }
-    
-    
-    
     
     /**
      * @todo ovo ubaci u __call call_user_func_array kao $this->arguments($arguments)

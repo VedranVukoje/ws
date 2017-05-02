@@ -22,6 +22,8 @@ function dump($dump){
 try{
     
     
+    
+    
     /**
      * @todo 
      * Ovo tek kasnije include 'config_za_wsawsclint.php'
@@ -34,16 +36,14 @@ try{
     $server1 = $ws->get('server1');
     
     dump($server1->remoteTest2(['a' => 1, 'b' => 3]));
-    
     dump($server1->client()->getLastResponse());
-    
-
-    
-    
     dump($ws->get('server1')->remoteTest2(1,3));
     
     dump($ws->get('server1')->remoteTest4());
     dump($ws->get('server1')->remoteTest5());
+    
+    
+//    dump($ws->get('server3'));
     
 //    dump($object->one);
     

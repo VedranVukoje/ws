@@ -12,7 +12,7 @@ use Wsa\Ws\Adapter\WsArrayCollection;
 use Wsa\Ws\Exceptions\ClentConfigurationResolverException;
 
 /**
- * Iz array mapiramo u ClientConfiguration
+ * Iz array mapiramo u array clientConfigurations ClientConfiguration[] 
  *
  * @author vedran
  */
@@ -25,10 +25,10 @@ class ClentConfigurationResolver implements \IteratorAggregate, \ArrayAccess
      */
     private $clientConfigurations;
 
-    public function __construct(array $options = [])
+    public function __construct(array $configuration = [])
     {
         $this->clientConfigurations = new WsArrayCollection();
-        $this->setClientConfigurations($options);
+        $this->setClientConfiguration($configuration);
     }
 
     public function clientConfigurations(): WsArrayCollection
@@ -36,7 +36,7 @@ class ClentConfigurationResolver implements \IteratorAggregate, \ArrayAccess
         return $this->clientConfigurations;
     }
 
-    public function clientConfiguration($key): ClientConfiguration
+    public function clientConfiguration($key): \Closure
     {
         return $this->clientConfigurations[$key];
     }
@@ -47,32 +47,31 @@ class ClentConfigurationResolver implements \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Iz array mapiramo u ClientConfiguration
-     * 
-     * @todo Ubaciti u OPcache
-     * @todo mozda ako zapne  sa Closure prebaci u ovo..
-     * $this->clientConfiguration->set($clientName, new ClientConfiguration($clientName, $wsdl,$clientOption));
-     * 
-     * @param array $options
+     * Iz array mapiramo u array ClientConfiguration[]
      */
-    public function resolve(array $options = [])
+    public function resolve(array $configuration = [])
     {
-        $this->setClientConfigurations($options);
+        $this->setClientConfiguration($configuration);
     }
 
     public function offsetSet($offset, $value)
     {
         throw new ClentConfigurationResolverException('ClentConfigurationResolver je read-only.');
     }
-
-    public function offsetGet($offset)
+    
+    public function offsetGet($offset): \Closure
     {
-        return $this->clientConfigurations[$offset];
+        if($config = $this->clientConfigurations[$offset]){
+            return $config;
+        }
+        
+        $msg = 'Kljuc "%s" u array-u ClientConfiguration::clientConfigurations[] ne postoji.';
+        throw new ClentConfigurationResolverException(sprintf($msg, $offset));
     }
 
     public function offsetExists($offset)
     {
-        return isset($this->clientConfigurations[$offset]);
+        return isset($this->clientConfigurations[$offset]) && !empty($this->clientConfigurations[$offset]);
     }
 
     public function offsetUnset($offset)
@@ -82,13 +81,18 @@ class ClentConfigurationResolver implements \IteratorAggregate, \ArrayAccess
 
     /**
      * ClientConfiguration agregiramo u WsArrayCollection
+     * @todo Ubaciti u OPcache
      * @todo Naci mozda neko prikladnije ime
-     * @param array $options
+     * @todo mozda ako zapne  sa Closure prebaci u ovo..
+     * $this->clientConfiguration->set($clientName, new ClientConfiguration($clientName, $wsdl,$clientOption));
+     * 
+     * 
      */
-    private function setClientConfigurations(array $options = [])
+    private function setClientConfiguration(array $configuration = [])
     {
-        foreach ($options as $clientName => $clientSettings) {
+        foreach ($configuration as $clientName => $clientSettings) {
             /**
+             * 
              * Da li validirati i ovede?
              * $wsld se vec validira ClientConfiguration s $clientOptions 
              * isto u ClientConfiguration::setOptions ima defaultna podesavanja 

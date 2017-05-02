@@ -9,13 +9,11 @@
 namespace Wsa\Ws\Exceptions;
 
 /**
- * Description of SoapWsdlCanNotBeEmpty
- * 
- * Ovo ne koristis .
- * 
+ * Description of WsdlException
+ *
  * @author vedran
  */
-class SoapWsdlCanNotBeEmpty extends WsaWsException
+class WsdlException extends WsaWsException
 {
     //put your code here
 }

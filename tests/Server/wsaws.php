@@ -1,7 +1,5 @@
 <?php
 
-//echo \Tests\Ws\ClassMap\Server1RemoteTest5ClassMap::class;
-
 return [
     'server1' => [
         'wsdl' => 'http://ws.tests/server1.php',
@@ -15,7 +13,7 @@ return [
     ],
     'server2' => [
         'wsdl' => 'http://ws.tests/server2.php',
-        'options' => [
-        ]
-    ]
+        'options' => []
+    ],
+    'server3' => []
 ];

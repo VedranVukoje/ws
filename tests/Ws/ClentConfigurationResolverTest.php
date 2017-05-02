@@ -15,29 +15,17 @@ namespace Tests\Ws;
  */
 class ClentConfigurationResolverTest extends \PHPUnit_Framework_TestCase
 {
-    
-    public function nesto()
+
+    private $configuration;
+
+    public function setUp()
+    {
+        $this->configuration = include __DIR__ . '/../Server/wsaws.php';
+    }
+
+    public function instanceWitOutOptionsIsEmptyArray()
     {
         
     }
 
-    
-
-    public function config()
-    {
-        return [
-            'server1' => [
-                'wsdl' => 'http://ws.tests/server1.php',
-                'options' => [
-                    
-                ]
-            ],
-            'server2' => [
-                'wsdl' => 'http://ws.tests/server2.php',
-                'options' => [
-                    
-                ]
-            ]
-        ];
-    }
 }
