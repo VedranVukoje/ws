@@ -38,7 +38,7 @@ final class Ws
          */
         $configuration = new ClentConfigurationCollection(include $configPath . '/wsaws.php');
         
-        dump($configuration['server1']());
+//        $configuration['conf1'] = \Tests\Ws\TestAssets\ClientConfigurationObject::creteOne();
         
         return new static(new ClientManager($configuration));
     }

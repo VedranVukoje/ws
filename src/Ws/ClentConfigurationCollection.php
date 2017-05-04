@@ -8,27 +8,25 @@
 
 namespace Wsa\Ws;
 
-use Wsa\Ws\Adapter\WsArrayCollection;
-use Wsa\Ws\Exceptions\ClentConfigurationResolverException;
+use Wsa\Ws\Exceptions\ClentConfigurationCollectionException;
 
 /**
- * Iz PHP array mapiramo u array clientConfigurations ClientConfiguration[] 
+ * Iz PHP array mapiramo u array $_clientConfiguration \Closure 
  *
  * @author vedran
  */
-class ClentConfigurationCollection implements \IteratorAggregate, \ArrayAccess
+class ClentConfigurationCollection implements \IteratorAggregate, \ArrayAccess, \Countable
 {
 
     /**
      *
      * @var ClientConfiguration [] kao Closure []
      */
-    
-    private static $_clientConfiguration;
+    private static $_clientConfiguration = [];
 
     public function __construct(array $configuration = [])
     {
-        
+
         $this->configuration = $configuration;
     }
 
@@ -37,10 +35,10 @@ class ClentConfigurationCollection implements \IteratorAggregate, \ArrayAccess
         if (self::$_clientConfiguration[$key]) {
             return self::$_clientConfiguration[$key];
         }
-        
+
         if ($conf = $this->configuration[$key]) {
-            
-            
+
+
             /**
              * @todo 
              * ?????????
@@ -48,20 +46,20 @@ class ClentConfigurationCollection implements \IteratorAggregate, \ArrayAccess
              */
             $wsld = $conf['wsdl'] ?? '';
             $clientOptions = $conf['options'] ?? [];
-            
+
             /**
              * @todo izbaci iz Closure 
              */
             self::$_clientConfiguration[$key] = function() use ($key, $wsld, $clientOptions) {
                 return new ClientConfiguration(new ClientName($key), new Wsdl($wsld), $clientOptions);
             };
-            
+
             return self::$_clientConfiguration[$key];
         }
 
 
         $msg = 'Kljuc "%s" u array-u ClientConfiguration::clientConfigurations[] ne postoji.';
-        throw new ClentConfigurationResolverException(sprintf($msg, $key));
+        throw new ClentConfigurationCollectionException(sprintf($msg, $key));
     }
 
     public function getIterator()
@@ -71,10 +69,16 @@ class ClentConfigurationCollection implements \IteratorAggregate, \ArrayAccess
 
     public function offsetSet($offset, $value)
     {
+        if (!$value instanceof ClientConfiguration) {
+            throw new ClentConfigurationCollectionException(sprintf("Vrednost mora biti instanca od Wsa\Ws\ClientConfiguration."));
+        }
+
         /**
-         * @todo ne moze ovoako... $value ????
+         * @todo izbaci iz Closure 
          */
-        return $this->clientConfiguration($offset);
+        self::$_clientConfiguration[$offset] = function() use ($value) {
+            return $value;
+        };
     }
 
     public function offsetGet($offset)
@@ -84,7 +88,7 @@ class ClentConfigurationCollection implements \IteratorAggregate, \ArrayAccess
 
     public function offsetExists($offset)
     {
-        return isset($this->clientConfigurations[$offset]) && !empty($this->clientConfigurations[$offset]);
+        return array_key_exists($offset, self::$_clientConfiguration);
     }
 
     public function offsetUnset($offset)
@@ -92,6 +96,9 @@ class ClentConfigurationCollection implements \IteratorAggregate, \ArrayAccess
         unset(self::$_clientConfiguration[$offset]);
     }
 
-    
+    public function count()
+    {
+        return count(self::$_clientConfiguration);
+    }
 
 }

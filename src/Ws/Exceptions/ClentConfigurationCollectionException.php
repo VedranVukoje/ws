@@ -13,7 +13,7 @@ namespace Wsa\Ws\Exceptions;
  *
  * @author vedran
  */
-class ClentConfigurationResolverException extends WsaWsException
+class ClentConfigurationCollectionException extends WsaWsException
 {
     //put your code here
 }

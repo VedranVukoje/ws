@@ -10,7 +10,8 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\Ws\\": "tests/Ws",
-            "Tests\\Ws\\ClassMap\\": "tests/ClassMap"
+            "Tests\\Ws\\ClassMap\\": "tests/ClassMap",
+            "Tests\\Ws\\TestAssets\\": "tests/TestAssets"
         }
     },
     "authors": [

@@ -23,7 +23,10 @@ try{
     (new ZendSoapFactory)->client();
 //    new \Zend\Soap\Client;
     
+//    $conf1 = \Tests\Ws\TestAssets\ClientConfigurationObject::creteOne();
     
+    
+//    dump($clientConfiguration);
     /**
      * @todo 
      * Ovo tek kasnije include 'config_za_wsawsclint.php'
@@ -37,6 +40,8 @@ try{
     
     dump($server1->remoteTest2(['a' => 1, 'b' => 3]));
     dump($server1->client()->getLastResponse());
+    dump($server1->clientConfiguration());
+    
     dump($ws->get('server1')->remoteTest2(1,3));
     
     dump($ws->get('server1')->remoteTest4());

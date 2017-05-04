@@ -16,6 +16,7 @@ namespace Wsa\Ws;
 class Client
 {
     private $client;
+    private $config;
     private $soap;
     private $name;
     
@@ -31,6 +32,7 @@ class Client
         $this->soap = $soap;
         $this->name = $config->client();
         $this->setClient($config->wsdl(), $config->options());
+        $this->config = $config;
     }
     
     public function name()
@@ -64,6 +66,11 @@ class Client
     public function client()
     {
         return $this->client;
+    }
+    
+    public function clientConfiguration(): ClientConfiguration
+    {
+        return $this->config;
     }
 
     private function setClient($wsdl, $options)
