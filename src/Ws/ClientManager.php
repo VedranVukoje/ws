@@ -20,7 +20,7 @@ class ClientManager
     private $clientConfigurations;
     private static $clients = [];
 
-    public function __construct(ClentConfigurationResolver $clientConfigurations)
+    public function __construct(ClentConfigurationCollection $clientConfigurations)
     {
         $this->clientConfigurations = $clientConfigurations;
     }

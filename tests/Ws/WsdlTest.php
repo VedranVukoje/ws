@@ -18,6 +18,16 @@ class WsdlTest extends \PHPUnit_Framework_TestCase
 {
     
     /**
+     * @test
+     * @expectedException \Wsa\Ws\Exceptions\WsdlException
+     */
+    public function shouldBeThrowException()
+    {
+        new Wsdl;
+        new Wsdl('');
+    }
+
+    /**
      * 
      * @test
      */
@@ -25,11 +35,8 @@ class WsdlTest extends \PHPUnit_Framework_TestCase
     {
         $one = new Wsdl('http://ws.tests/server1.php');
         $one_ = new Wsdl('http://ws.tests/server1.php');
-        $tow = new Wsdl;
-        $two_ = new Wsdl('');
+        
         $this->assertInstanceOf(Wsdl::class, $one);
-        $this->assertEquals((string)$one, (string)$one_);
-        $this->assertNotEquals((string)$tow, (string)$one_);
         $this->assertEquals((string)$one, (string)$one_);
     }
 }

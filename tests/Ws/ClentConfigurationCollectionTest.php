@@ -8,12 +8,13 @@
 
 namespace Tests\Ws;
 
+use Wsa\Ws\ClentConfigurationCollection;
 /**
  * Description of ClentConfigurationResolverTest
- *
+ * 
  * @author vedran
  */
-class ClentConfigurationResolverTest extends \PHPUnit_Framework_TestCase
+class ClentConfigurationCollectionTest extends \PHPUnit_Framework_TestCase
 {
 
     private $configuration;
@@ -22,10 +23,13 @@ class ClentConfigurationResolverTest extends \PHPUnit_Framework_TestCase
     {
         $this->configuration = include __DIR__ . '/../Server/wsaws.php';
     }
-
+    
+    /**
+     * @test
+     */
     public function instanceWitOutOptionsIsEmptyArray()
     {
-        
+        new ClentConfigurationCollection;
     }
 
 }

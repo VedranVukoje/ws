@@ -20,8 +20,8 @@ function dump($dump){
 
 
 try{
-    
-    
+    (new ZendSoapFactory)->client();
+//    new \Zend\Soap\Client;
     
     
     /**

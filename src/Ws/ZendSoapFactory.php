@@ -11,7 +11,7 @@ use Wsa\Ws\Exceptions\SoapWsdlCanNotBeEmpty;
 use Zend\Soap\Client;
 
 /**
- * Factory za Zend Sopa 
+ * Factory za Zend Sopa Client
  *
  * @author Vedran Vukoje <vedran.vukoje at telenor.rs>
  */

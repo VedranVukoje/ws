@@ -36,7 +36,10 @@ final class Ws
          * Ovo tek kasnije include 'config_za_wsawsclint.php'
          * u zavisnosti od alata ( framework ... ) lokacija za konfig...
          */
-        $configuration = new ClentConfigurationResolver(include $configPath . '/wsaws.php');
+        $configuration = new ClentConfigurationCollection(include $configPath . '/wsaws.php');
+        
+        dump($configuration['server1']());
+        
         return new static(new ClientManager($configuration));
     }
 

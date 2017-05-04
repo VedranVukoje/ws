@@ -20,16 +20,6 @@ class ZendSoapFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * 
      * @test
-     * @expectedException \Wsa\Ws\Exceptions\SoapWsdlCanNotBeEmpty
-     */
-    public function shouldThrowException()
-    {
-        (new ZendSoapFactory)->client();
-    }
-    
-    /**
-     * 
-     * @test
      */
     public function shouldBeInstanceOfZendSoapClient()
     {
