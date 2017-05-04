@@ -47,7 +47,11 @@ try{
     dump($ws->get('server1')->remoteTest4());
     dump($ws->get('server1')->remoteTest5());
     
+    $config = $ws->configuration();
     
+    dump($config['server1']);
+    
+    dump($ws->configuration());
 //    dump($ws->get('server3'));
     
 //    dump($object->one);

@@ -57,11 +57,9 @@ final class Ws
         }
     }
     
-    public function configuration($name)
+    public function configuration(): ClientConfigurationCollection
     {
-        $configuration = $this->manager->clentConfigurationCollection();
-        
-        return $configuration[$name];
+        return $this->manager->clentConfigurationCollection();
     }
 
 

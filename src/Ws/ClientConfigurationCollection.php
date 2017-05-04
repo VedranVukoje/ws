@@ -23,6 +23,8 @@ class ClientConfigurationCollection implements \IteratorAggregate, \ArrayAccess,
      * @var ClientConfiguration [] kao Closure []
      */
     private static $_clientConfiguration = [];
+    
+    private $configuration;
 
     public function __construct(array $configuration = [])
     {
