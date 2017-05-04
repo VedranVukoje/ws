@@ -15,7 +15,7 @@ use Wsa\Ws\Exceptions\ClentConfigurationCollectionException;
  *
  * @author vedran
  */
-class ClentConfigurationCollection implements \IteratorAggregate, \ArrayAccess, \Countable
+class ClientConfigurationCollection implements \IteratorAggregate, \ArrayAccess, \Countable
 {
 
     /**

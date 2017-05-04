@@ -8,9 +8,6 @@
 
 namespace Tests\Ws;
 
-use Wsa\Ws\ClentConfigurationCollection;
-use Wsa\Ws\ClientConfiguration;
-use Closure;
 /**
  * PHP Warning  Notice setujemo na disabled
  * u slucaju da ne postoji konfiguracija ocekujemo 
@@ -18,19 +15,23 @@ use Closure;
  */
 \PHPUnit_Framework_Error_Warning::$enabled = FALSE;
 \PHPUnit_Framework_Error_Notice::$enabled = FALSE;
+
+use Wsa\Ws\ClientConfigurationCollection;
+use Closure;
+
 /**
  * Description of ClentConfigurationResolverTest
  * 
  * @author vedran
  */
-class ClentConfigurationCollectionTest extends \PHPUnit_Framework_TestCase
+class ClientConfigurationCollectionTest extends \PHPUnit_Framework_TestCase
 {
 
     private $configuration;
 
     public function setUp()
     {
-        $this->configuration = new ClentConfigurationCollection(include __DIR__ . '/../Server/wsaws.php');
+        $this->configuration = new ClientConfigurationCollection(include __DIR__ . '/../Server/wsaws.php');
         
     }
     
@@ -39,7 +40,7 @@ class ClentConfigurationCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function instanceWitOutOptionsIsEmptyArray()
     {
-        $configuration = new ClentConfigurationCollection;
+        $configuration = new ClientConfigurationCollection;
         $this->assertCount(0, $configuration);
         $this->assertEmpty($configuration);
     }

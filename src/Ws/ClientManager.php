@@ -20,7 +20,7 @@ class ClientManager
     private $clientConfigurations;
     private static $clients = [];
 
-    public function __construct(ClentConfigurationCollection $clientConfigurations)
+    public function __construct(ClientConfigurationCollection $clientConfigurations)
     {
         $this->clientConfigurations = $clientConfigurations;
     }
@@ -53,6 +53,11 @@ class ClientManager
     public function exists(string $name): bool
     {
         return isset(self::$clients[$name]);
+    }
+    
+    public function clentConfigurationCollection()
+    {
+        return $this->clientConfigurations;
     }
 
 }

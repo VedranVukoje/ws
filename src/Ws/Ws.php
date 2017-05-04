@@ -36,7 +36,7 @@ final class Ws
          * Ovo tek kasnije include 'config_za_wsawsclint.php'
          * u zavisnosti od alata ( framework ... ) lokacija za konfig...
          */
-        $configuration = new ClentConfigurationCollection(include $configPath . '/wsaws.php');
+        $configuration = new ClientConfigurationCollection(include $configPath . '/wsaws.php');
         
 //        $configuration['conf1'] = \Tests\Ws\TestAssets\ClientConfigurationObject::creteOne();
         
@@ -57,6 +57,14 @@ final class Ws
         }
     }
     
+    public function configuration($name)
+    {
+        $configuration = $this->manager->clentConfigurationCollection();
+        
+        return $configuration[$name];
+    }
+
+
     public function exists($name): bool
     {
         return $this->manager->exists($name);
