@@ -35,24 +35,36 @@ try{
 //    $configuration = new ClentConfigurationResolver(include 'wsaws.php');
     
     $ws = Ws::build(__DIR__);
+    $ws->debug();
     
+    echo '$ws->get(\'Nepostoji\')';
+    dump($ws->get('Nepostoji'));
+    echo '$ws->get(\'server1\')';
     $server1 = $ws->get('server1');
-    
+    dump($server1);
+    echo '$server1->remoteTest2([\'a\' => 1, \'b\' => 3])';
     dump($server1->remoteTest2(['a' => 1, 'b' => 3]));
+    echo '$server1->client()->getLastRequest();';
+    dump($server1->client()->getLastRequest());
+    echo '$server1->client()->getLastResponse();';
     dump($server1->client()->getLastResponse());
+    echo '$server1->clientConfiguration()';
     dump($server1->clientConfiguration());
-    
+    echo '$ws->get(\'server1\')->remoteTest2(1,3)';
     dump($ws->get('server1')->remoteTest2(1,3));
-    
+    echo '$ws->get(\'server1\')->remoteTest4()';
     dump($ws->get('server1')->remoteTest4());
+    echo '$ws->get(\'server1\')->remoteTest5()';
     dump($ws->get('server1')->remoteTest5());
-    
     $config = $ws->configuration();
-    
+    echo '$config = $ws->configuration(); $config[\'server1\'];';
     dump($config['server1']);
-    
-    dump($ws->configuration());
-//    dump($ws->get('server3'));
+    echo '$configuration = $ws->get(\'server1\')->configuration()';
+    $configuration = $ws->configuration();
+    dump($configuration);
+    $configuration['ServerCreateOne'] = \Tests\Ws\TestAssets\ClientConfigurationObject::creteOne();
+    echo '$configuration[\'ServerCreateOne\'] = Wsa\Ws\ClientConfiguration;';
+    dump($ws->get('ServerCreateOne'));
     
 //    dump($object->one);
     

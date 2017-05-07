@@ -37,9 +37,10 @@ class ClientManager
         if (isset(self::$clients[$name])) {
             return self::$clients[$name];
         }
-
-        if ($conf = $this->clientConfigurations[$name]) {
-
+        
+        if ($this->clientConfigurations[$name]) {
+            
+            $conf = $this->clientConfigurations[$name];
             self::$clients[$name] = function() use ($conf) {
                 return new Client(new ZendSoapFactory, $conf());
             };
@@ -59,5 +60,5 @@ class ClientManager
     {
         return $this->clientConfigurations;
     }
-
+    
 }

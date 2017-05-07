@@ -56,8 +56,9 @@ class Client
          * $client->nekaMetoda($a, $b); // [0 => 1, 1 => 1]
          * $client->nekaMetoda([ 'a' => $a, 'b' => $b ]); [ 0 => ["a" => 1, "b" => 1]]
          */
-        $arguments = is_array($arguments[0])? $arguments[0] : $arguments;
-        
+//        dump($arguments);
+        $arguments = empty($arguments)? $arguments : is_array($arguments[0])? $arguments[0]:$arguments;
+//        dump($arguments);
         return call_user_func_array(
                 [$this->client, 'call'], 
                 [$name, $arguments]);

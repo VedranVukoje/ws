@@ -12,8 +12,9 @@ use Wsa\Ws\Exceptions\WsException;
 use Wsa\Ws\Exceptions\WsaWsException; 
 use SoapFault;
 use Exception;
+use ErrorException;
 
-use Tests\Ws\ClassMap\Server1RemoteTest1ClassMap;
+
 /**
  * WS Clint manager .
  *
@@ -23,8 +24,14 @@ final class Ws
 {
 
     private $manager;
-
-    public static function build($configPath)
+    
+    /**
+     * 
+     * @param string $configPath
+     * @return \static
+     * @throws WsException
+     */
+    public static function build(string $configPath = '')
     {
         $config = $configPath . '/wsaws.php';
         if(!file_exists($config)){
@@ -37,12 +44,15 @@ final class Ws
          * u zavisnosti od alata ( framework ... ) lokacija za konfig...
          */
         $configuration = new ClientConfigurationCollection(include $configPath . '/wsaws.php');
-        
-//        $configuration['conf1'] = \Tests\Ws\TestAssets\ClientConfigurationObject::creteOne();
-        
         return new static(new ClientManager($configuration));
     }
-
+    
+    /**
+     * 
+     * @param string $name
+     * @return \Wsa\Ws\Clint $ws 
+     * @expectedException SoapFault|Exception|WsaWsException
+     */
     public function get($name)
     {
         try {
@@ -54,15 +64,26 @@ final class Ws
             return $ex;
         } catch (Exception $ex) {
             return $ex;
+        } catch (ErrorException $ex){
+            dump($ex);
         }
+        
     }
     
+    /**
+     * 
+     * @return \Wsa\Ws\ClientConfigurationCollection
+     */
     public function configuration(): ClientConfigurationCollection
     {
         return $this->manager->clentConfigurationCollection();
     }
 
-
+    /**
+     * 
+     * @param string $name
+     * @return bool
+     */
     public function exists($name): bool
     {
         return $this->manager->exists($name);
@@ -76,6 +97,11 @@ final class Ws
     private function __construct(ClientManager $manager)
     {
         $this->manager = $manager;
+    }
+    
+    public function debug()
+    {
+        set_error_handler([WsaWsException::class,'errorHandler']);
     }
 
 }

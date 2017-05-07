@@ -23,24 +23,22 @@ class ClientConfigurationCollection implements \IteratorAggregate, \ArrayAccess,
      * @var ClientConfiguration [] kao Closure []
      */
     private static $_clientConfiguration = [];
-    
     private $configuration;
 
     public function __construct(array $configuration = [])
     {
-
         $this->configuration = $configuration;
     }
 
     public function clientConfiguration($key)
     {
-        if (self::$_clientConfiguration[$key]) {
+        if (isset(self::$_clientConfiguration[$key])) {
             return self::$_clientConfiguration[$key];
         }
 
-        if ($conf = $this->configuration[$key]) {
+        if (array_key_exists($key, $this->configuration)) {
 
-
+            $conf = $this->configuration[$key];
             /**
              * @todo 
              * ?????????
@@ -60,7 +58,7 @@ class ClientConfigurationCollection implements \IteratorAggregate, \ArrayAccess,
         }
 
 
-        $msg = 'Kljuc "%s" u array-u ClientConfiguration::clientConfigurations[] ne postoji.';
+        $msg = 'Kljuc "%s" u array-u ClientConfigurationCollection::clientConfigurations[] ne postoji.';
         throw new ClentConfigurationCollectionException(sprintf($msg, $key));
     }
 
