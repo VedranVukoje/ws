@@ -13,8 +13,8 @@ namespace Tests\Ws;
  * u slucaju da ne postoji konfiguracija ocekujemo 
  * \Wsa\Ws\Exceptions\ClentConfigurationCollectionException
  */
-\PHPUnit_Framework_Error_Warning::$enabled = FALSE;
-\PHPUnit_Framework_Error_Notice::$enabled = FALSE;
+//\PHPUnit_Framework_Error_Warning::$enabled = FALSE;
+//\PHPUnit_Framework_Error_Notice::$enabled = FALSE;
 
 use Wsa\Ws\ClientConfigurationCollection;
 use Closure;
