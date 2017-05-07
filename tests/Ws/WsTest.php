@@ -63,6 +63,17 @@ class WsTest extends \PHPUnit_Framework_TestCase
     /**
      * 
      * @test
+     * @expectedException Wsa\Ws\Exceptions\WsaWsException
+     */
+    public function shouldBeThrowWsaWsException()
+    {
+        $this->ws->get('KonfiguracijaKojaNepostoji');
+    }
+
+
+    /**
+     * 
+     * @test
      */
     public function shouldBeInstanceOfClientConfigurationCollection()
     {
