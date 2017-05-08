@@ -2,3 +2,5 @@ vendor
 composer.lock
 error_log
 access_log
+access.log
+error.log
