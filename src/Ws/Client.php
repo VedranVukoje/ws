@@ -1,23 +1,39 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * WSA\WS Lib
  */
-
 namespace Wsa\Ws;
 
+use Zend\Soap\Client as ZendSoapClient;
+
 /**
- * WS Client . 
+ * WSA\WS Client . 
  *
  * @author vedran
  */
 class Client
 {
+    /**
+     *
+     * @var \Zend\Soap\Client 
+     */
     private $client;
+    /**
+     *
+     * @var \Wsa\Ws\ClientConfiguration 
+     */
     private $config;
+    /**
+     *
+     * Factory za zend \Zend\Soap\Client
+     * @var \Wsa\Ws\SoapClientFactoryInterface 
+     */
     private $soap;
+    /**
+     *
+     * @var \Waa\Ws\ClientName 
+     */
     private $name;
     
     
@@ -35,7 +51,11 @@ class Client
         $this->config = $config;
     }
     
-    public function name()
+    /**
+     * 
+     * @return \Wsa\Ws\ClientName
+     */
+    public function name(): ClientName
     {
         return $this->name;
     }
@@ -56,19 +76,25 @@ class Client
          * $client->nekaMetoda($a, $b); // [0 => 1, 1 => 1]
          * $client->nekaMetoda([ 'a' => $a, 'b' => $b ]); [ 0 => ["a" => 1, "b" => 1]]
          */
-//        dump($arguments);
-        $arguments = empty($arguments)? $arguments : is_array($arguments[0])? $arguments[0]:$arguments;
-//        dump($arguments);
+//        $arguments = empty($arguments)? $arguments : is_array($arguments[0])? $arguments[0]:$arguments;
         return call_user_func_array(
                 [$this->client, 'call'], 
                 [$name, $arguments]);
     }
     
-    public function client()
+    /**
+     * 
+     * @return \Zend\Soap\Client
+     */
+    public function client(): ZendSoapClient
     {
         return $this->client;
     }
     
+    /**
+     * 
+     * @return \Wsa\Ws\ClientConfiguration
+     */
     public function clientConfiguration(): ClientConfiguration
     {
         return $this->config;
@@ -76,7 +102,14 @@ class Client
 
     private function setClient($wsdl, $options)
     {
-        $this->client = $this->soap->client($wsdl, $options);
+        /**
+         * @todo 
+         * ?????????? msm da ovo treba drugacije.
+         * 
+         */
+        if(null === $this->client){
+            $this->client = $this->soap->client($wsdl, $options);
+        }
     }
     
     /**

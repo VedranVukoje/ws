@@ -9,11 +9,10 @@
 namespace Wsa\Ws;
 
 use Wsa\Ws\Exceptions\WsException;
-use Wsa\Ws\Exceptions\WsaWsException; 
+use Wsa\Ws\Exceptions\WsaWsException;
 use SoapFault;
 use Exception;
 use ErrorException;
-
 
 /**
  * WS Clint manager .
@@ -24,7 +23,7 @@ final class Ws
 {
 
     private $manager;
-    
+
     /**
      * 
      * @param string $configPath
@@ -34,10 +33,10 @@ final class Ws
     public static function build(string $configPath = '')
     {
         $config = $configPath . '/wsaws.php';
-        if(!file_exists($config)){
+        if (!file_exists($config)) {
             throw new WsException(sprintf('Konfiguracioni fajl "%s" ne postoji.', $config));
         }
-        
+
         /**
          * @todo 
          * Ovo tek kasnije include 'config_za_wsawsclint.php'
@@ -46,7 +45,7 @@ final class Ws
         $configuration = new ClientConfigurationCollection(include $configPath . '/wsaws.php');
         return new static(new ClientManager($configuration));
     }
-    
+
     /**
      * 
      * @param string $name
@@ -59,17 +58,16 @@ final class Ws
             $ws = $this->manager->get($name);
             return $ws();
         } catch (WsaWsException $ex) {
-            return $ex;
+            throw $ex;
         } catch (SoapFault $ex) {
-            return $ex;
+            throw $ex;
         } catch (Exception $ex) {
-            return $ex;
-        } catch (ErrorException $ex){
-            dump($ex);
+            throw $ex;
+        } catch (ErrorException $ex) {
+            throw $ex;
         }
-        
     }
-    
+
     /**
      * 
      * @return \Wsa\Ws\ClientConfigurationCollection
@@ -98,10 +96,10 @@ final class Ws
     {
         $this->manager = $manager;
     }
-    
+
     public function debug()
     {
-        set_error_handler([WsaWsException::class,'errorHandler']);
+        set_error_handler([WsaWsException::class, 'errorHandler']);
     }
 
 }

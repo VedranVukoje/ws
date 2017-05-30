@@ -26,19 +26,12 @@ try{
 //    $conf1 = \Tests\Ws\TestAssets\ClientConfigurationObject::creteOne();
     
     
-//    dump($clientConfiguration);
-    /**
-     * @todo 
-     * Ovo tek kasnije include 'config_za_wsawsclint.php'
-     * u zavisnosti od alata ( framework ... ) lokacija za konfig...
-     */
-//    $configuration = new ClentConfigurationResolver(include 'wsaws.php');
-    
     $ws = Ws::build(__DIR__);
     $ws->debug();
     
     echo '$ws->get(\'Nepostoji\')';
-    dump($ws->get('Nepostoji'));
+    $s = $ws->get('Nepostoji');
+    dump($s);
     echo '$ws->get(\'server1\')';
     $server1 = $ws->get('server1');
     dump($server1);

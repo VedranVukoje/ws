@@ -61,11 +61,10 @@ class WsTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * 
-     * 
-     * @expectedException ErrorException
+     * @test
+     * @expectedException Wsa\Ws\Exceptions\ClentConfigurationCollectionException
      */
-    public function shouldThrowWsaWsException()
+    public function shouldThrowClentConfigurationCollectionException()
     {
         $this->ws->get('Nepostoji');
     }

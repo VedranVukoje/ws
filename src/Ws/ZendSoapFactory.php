@@ -7,7 +7,6 @@
 
 namespace Wsa\Ws;
 
-use Wsa\Ws\Exceptions\SoapWsdlCanNotBeEmpty;
 use Zend\Soap\Client;
 
 /**

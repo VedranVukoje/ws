@@ -1,16 +1,10 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace Wsa\Ws;
 
 use Wsa\Ws\Exceptions\ClientNameException;
 /**
- * Description of ClientName
+ * Value Object za ime servisa
  *
  * @author vedran
  */
@@ -19,12 +13,21 @@ class ClientName
     
     private $value;
 
-
+    
+    /**
+     * 
+     * @param string $value
+     */
     public function __construct(string $value = '')
     {
         $this->setName($value);
     }
     
+    /**
+     * 
+     * @param string $value
+     * @throws ClientNameException
+     */
     private function setName(string $value)
     {
         if(empty($value)){
@@ -34,6 +37,10 @@ class ClientName
         $this->value = $value;
     }
     
+    /**
+     * 
+     * @return string
+     */
     public function __toString()
     {
         return $this->value;
