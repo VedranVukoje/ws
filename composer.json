@@ -21,7 +21,6 @@
         }
     ],
     "require": {
-        "php": "~7.0",
         "ocramius/proxy-manager": "^1.0",
         "symfony/options-resolver": "^3.2",
         "container-interop/container-interop": "^1.1.0",
