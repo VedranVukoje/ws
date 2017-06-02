@@ -24,7 +24,6 @@
         "symfony/options-resolver": "^3.2",
         "container-interop/container-interop": "^1.1.0",
         "zendframework/zend-stdlib": "^3.1",
-        "ocramius/generated-hydrator": "^2.0",
         "zendframework/zend-xmlrpc": "^2.6",
         "zendframework/zend-json": "^3.0",
         "zendframework/zend-soap": "^2.6",
