@@ -7,8 +7,6 @@
 
 namespace Wsa\Ws;
 
-use Zend\Soap\Client;
-
 /**
  * Factory za Zend Sopa Client
  *
@@ -19,6 +17,6 @@ class ZendSoapFactory implements SoapClientFactoryInterface
 
     public function client(string $wsdl = null, array $options = [])
     {
-        return new Client($wsdl, $options);
+        return new \Zend\Soap\Client($wsdl, $options);
     }
 }
